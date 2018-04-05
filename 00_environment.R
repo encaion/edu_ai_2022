@@ -10,3 +10,6 @@ options(stringsAsFactors = FALSE,
 
 #### etc ####
 date_origin = "1899-12-30"
+
+#### load functions ####
+source("03_functions.R")
