@@ -2,11 +2,12 @@
 library("readxl")
 library("dplyr")
 library("data.table")
-# library("lubridate")
 
 library("tm")
 library("KoNLP")
 library("topicmodels")
+
+library("ggplot2")
 
 #### options ####
 options(stringsAsFactors = FALSE,
