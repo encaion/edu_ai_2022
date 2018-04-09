@@ -4,3 +4,7 @@ regextract = function(pattern, text){
                                      text = text))
   return(unlist(text_ext))
 }
+
+unique_noun_check = function(x, pattern){
+  return(unique(unlist(lapply(x, FUN = "grep", pattern = pattern, value = TRUE))))
+}

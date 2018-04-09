@@ -418,3 +418,4 @@ df[, "text"] = gsub(pattern = "^ | $", replacement = "", df$text)
 df[1:20, "text"]
 
 # write.csv(df, "text_total_handled.csv", row.names = FALSE)
+# writeLines(df$text, "text_total_handled_text_only.txt")
