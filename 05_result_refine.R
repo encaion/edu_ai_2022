@@ -8,7 +8,6 @@ post = fread("lda_k10_posterior.csv", data.table = FALSE, nrows = 34329)
 head(post)
 
 #### 자료 조합 ####
-post[, "topic_n"] = apply(post, MARGIN = 1, FUN = "which.max")
 post[, "year"   ] = as.numeric(substr(doc_info$date, 1, 4))
 post[, "month"  ] = as.numeric(substr(doc_info$date, 6, 7))
 post[, "press"  ] = doc_info$press

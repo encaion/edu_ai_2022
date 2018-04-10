@@ -8,6 +8,7 @@ library("KoNLP")
 library("topicmodels")
 
 library("ggplot2")
+library("wordcloud2")
 
 #### options ####
 options(stringsAsFactors = FALSE,

@@ -92,5 +92,39 @@ head(lda_k10_terms_100, 10)
 lda_result_posterior = posterior(lda_result)
 lda_result_posterior = round(lda_result_posterior$topics, 5)
 colnames(lda_result_posterior) = paste0("topic_", 1:10)
+lda_result_posterior = as.data.frame(lda_result_posterior)
+lda_result_posterior[, "topic_n"] = apply(lda_result_posterior, MARGIN = 1, FUN = "which.max")
 head(lda_result_posterior)
 # write.csv(lda_result_posterior, "lda_k10_posterior.csv", row.names = FALSE)
+
+#### 토픽별 단어 추출 ####
+# topic 1
+dtm[which(lda_result_posterior$topic_n == 1), 1:dtm$ncol] %>% 
+  as.matrix() %>%
+  apply(MARGIN = 2, FUN = "sum") %>%
+  .[order(-.)] %>%
+  .[. > 0] -> topic_words
+
+df_topic_words_count = data.frame(obs = 1:length(topic_words),
+                                    words = names(topic_words),
+                                    count = as.numeric(topic_words))
+
+write.csv(df_topic_words_count, "lda_k10_topic_1_word_count.csv", row.names = FALSE)
+
+# topic 2 ~ 10
+for(n_topic in 2:10){
+  cat(paste0("\r", "====== topic: ", n_topic, " ======"))
+  dtm[which(lda_result_posterior$topic_n == n_topic), 1:dtm$ncol] %>% 
+    as.matrix() %>%
+    apply(MARGIN = 2, FUN = "sum") %>%
+    .[order(-.)] %>%
+    .[. > 0] -> topic_words
+  
+  df_topic_words_count = data.frame(obs = 1:length(topic_words),
+                                    words = names(topic_words),
+                                    count = as.numeric(topic_words))
+  
+  write.csv(df_topic_words_count, 
+            paste0("lda_k10_topic_", n_topic, "_word_count.csv"), 
+            row.names = FALSE)
+}
