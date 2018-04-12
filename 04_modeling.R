@@ -55,14 +55,14 @@ noun_pairs = data.frame(origin = c("하이마트",     "하이닉스",   "알리
                                    "박원순", "쿠팡맨", "쿠팡[^맨]", "티몬",
                                    "gs25", "gs[가-힣]", "gs[a-z]", "세븐일레븐",
                                    "h몰", "현대[^h]", "cj오쇼핑", "cj[^오]", 
-                                   "11st", "11번가"),
+                                   "11st", "11번가", "아마존", "amazon"),
                         change = c("롯데하이마트", "sk하이닉스", "알리바바", 
                                    "lg",   "lg유플러스", "lg생활건강", "lg전자", 
                                    "g마켓", "b2b마켓", "소셜마켓", "11번가",
                                    "박원순", "쿠팡맨", "쿠팡", "티몬",
                                    "gs25", "gs", "english", "세븐일레븐",
                                    "hmall", "현대", "cj오쇼핑", "cj", 
-                                   "11번가", "11번가"))
+                                   "11번가", "11번가", "아마존", "아마존"))
 
 for(n_pairs in 1:nrow(noun_pairs)){
   cat(paste0("\r", "==== ", n_pairs, "/", nrow(noun_pairs), " ===="))
@@ -127,4 +127,52 @@ for(n_topic in 2:10){
   write.csv(df_topic_words_count, 
             paste0("lda_k10_topic_", n_topic, "_word_count.csv"), 
             row.names = FALSE)
+}
+
+head(lda_result_posterior)
+
+#### 토픽별 연도별 추출 ####
+lda_total = fread("lda_k10_doc_info_total.csv", data.table = FALSE)
+
+for(n_year in unique(lda_total$year)){
+  for(n_topic in 1:10){
+    cat(paste0("\r", "====== topic: ", n_topic, ": ", n_year, " ======"))
+    dtm[which((lda_total$topic_n == n_topic) & (lda_total$year == n_year)), 1:dtm$ncol] %>% 
+      as.matrix() %>%
+      apply(MARGIN = 2, FUN = "sum") %>%
+      .[order(-.)] %>%
+      .[. > 0] -> topic_words
+    
+    df_topic_words_count = data.frame(obs = 1:length(topic_words),
+                                      words = names(topic_words),
+                                      count = as.numeric(topic_words))
+    
+    write.csv(df_topic_words_count, 
+              paste0("lda_k10_topic_", n_topic, "_", n_year, "_word_count.csv"), 
+              row.names = FALSE)
+  }  
+}
+
+#### 토픽별 연도별 월별 추출 ####
+lda_total = fread("lda_k10_doc_info_total.csv", data.table = FALSE)
+
+for(n_year in unique(lda_total$year)){
+  for(n_month in unique(lda_total$month)){
+    for(n_topic in 1:10){
+      cat(paste0("\r", "====== topic: ", n_topic, ": ", n_year, "-", n_month, " ======"))
+      dtm[which((lda_total$topic_n == n_topic) & (lda_total$year == n_year) & (lda_total$month == n_month)), 1:dtm$ncol] %>% 
+        as.matrix() %>%
+        apply(MARGIN = 2, FUN = "sum") %>%
+        .[order(-.)] %>%
+        .[. > 0] -> topic_words
+      
+      df_topic_words_count = data.frame(obs = 1:length(topic_words),
+                                        words = names(topic_words),
+                                        count = as.numeric(topic_words))
+      
+      write.csv(df_topic_words_count, 
+                paste0("lda_k10_topic_", n_topic, "_", n_year, "_", n_month, "_word_count.csv"), 
+                row.names = FALSE) 
+    }
+  }  
 }

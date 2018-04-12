@@ -47,12 +47,13 @@ ggplot(data = post_agg, aes(x = month,
         axis.title.y = element_text(size = 15, face = "bold"),
         plot.title   = element_text(size = 25, face = "bold"))
 
-#### word cloud ####
+#### [[word cloud]] ####
+#### __ 1) 전체 기간 ####
 df = fread("lda_k10_topic_1_word_count.csv", data.table = FALSE)
-wordcloud2(data = df[, -1], minSize = 10)
+wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
 
 df = fread("lda_k10_topic_2_word_count.csv", data.table = FALSE)
-wordcloud2(data = df[, -1], minSize = 10, shape = 'pentagon')
+wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
 
 df = fread("lda_k10_topic_3_word_count.csv", data.table = FALSE)
 wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
@@ -76,4 +77,38 @@ df = fread("lda_k10_topic_9_word_count.csv", data.table = FALSE)
 wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
 
 df = fread("lda_k10_topic_10_word_count.csv", data.table = FALSE)
+wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
+
+#### __ 2) 연도별 ####
+# 첫 번째 숫자가 토픽 번호 입니다.
+# 두 번째 숫자는 연도 입니다.
+
+# 예를 들어서 네 번째 토픽의 2016년도 데이터를 불러오고 싶으면 다음과 같이 입력합니다.
+# df = fread("lda_k10_topic_4_2016_word_count.csv", data.table = FALSE)
+
+df = fread("lda_k10_topic_1_2014_word_count.csv", data.table = FALSE)
+wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
+
+#### __ 3) 연도별 월별 ####
+# 첫 번째 숫자가 토픽 번호 입니다.
+# 두 번째 숫자는 연도 입니다.
+# 세 번째 숫자는 월 입니다.
+
+# 예를 들어서 네 번째 토픽의 2016년도 3월 데이터를 불러오고 싶으면 다음과 같이 입력합니다.
+# df = fread("lda_k10_topic_4_2016_3_word_count.csv", data.table = FALSE)
+
+#### ____ [1] 2014년 ####
+df = fread("lda_k10_topic_1_2014_1_word_count.csv", data.table = FALSE)
+wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
+
+#### ____ [2] 2015년 ####
+df = fread("lda_k10_topic_1_2015_1_word_count.csv", data.table = FALSE)
+wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
+
+#### ____ [3] 2016년 ####
+df = fread("lda_k10_topic_1_2016_1_word_count.csv", data.table = FALSE)
+wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
+
+#### ____ [4] 2017년 ####
+df = fread("lda_k10_topic_1_2017_1_word_count.csv", data.table = FALSE)
 wordcloud2(data = df[, -1], minSize = 10, shape = 'square')

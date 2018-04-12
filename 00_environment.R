@@ -10,6 +10,10 @@ library("topicmodels")
 library("ggplot2")
 library("wordcloud2")
 
+# workcloud2 설치는 다음 코드 실행
+# library("devtools")
+# install_github("Lchiffon/wordcloud2")
+
 #### options ####
 options(stringsAsFactors = FALSE,
         scipen = 100)
