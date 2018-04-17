@@ -83,6 +83,8 @@ dtm = DocumentTermMatrix(corpus)
 # class(dd)
 
 lda_result = LDA(dtm, control = list(seed = 1228), k = 10) # 상당히 오래걸림(1시간 이상)
+# saveRDS(lda_result, "lda_seed_1228_k_10.rds", compress = "gzip")
+lda_result = readRDS("lda_seed_1228_k_10.rds")
 
 # 10개 토픽의 상위 100개 단어 저장
 lda_k10_terms_100 = as.data.frame(terms(lda_result, 100))

@@ -50,16 +50,18 @@ ggplot(data = post_agg, aes(x = month,
 #### [[word cloud]] ####
 #### __ 1) 전체 기간 ####
 df = fread("lda_k10_topic_1_word_count.csv", data.table = FALSE)
-wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
+wordcloud2(data = df[, -1], minSize = 10, shape = "pentagon")
 
 df = fread("lda_k10_topic_2_word_count.csv", data.table = FALSE)
 wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
 
 df = fread("lda_k10_topic_3_word_count.csv", data.table = FALSE)
-wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
+wordcloud2(data = df[, -1], minSize = 10, shape = "circle")
 
 df = fread("lda_k10_topic_4_word_count.csv", data.table = FALSE)
-wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
+wordcloud2(data = df[, -1], minSize = 10, shape = 'star')
+
+letterCloud(data = df[, -1], word = "●", wordSize = 1)
 
 df = fread("lda_k10_topic_5_word_count.csv", data.table = FALSE)
 wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
