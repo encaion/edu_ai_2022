@@ -73,6 +73,10 @@ for(n_pairs in 1:nrow(noun_pairs)){
                      replacement = noun_pairs[n_pairs, "change"])
 }
 
+# saveRDS(nouns_gt1, "nouns_gt1.rds", compress = TRUE)
+# nouns_gt1 = readRDS("nouns_gt1.rds")
+
+# 전체
 corpus = Corpus(VectorSource(nouns_gt1))
 dtm = DocumentTermMatrix(corpus)
 
@@ -108,8 +112,8 @@ dtm[which(lda_result_posterior$topic_n == 1), 1:dtm$ncol] %>%
   .[. > 0] -> topic_words
 
 df_topic_words_count = data.frame(obs = 1:length(topic_words),
-                                    words = names(topic_words),
-                                    count = as.numeric(topic_words))
+                                  words = names(topic_words),
+                                  count = as.numeric(topic_words))
 
 write.csv(df_topic_words_count, "lda_k10_topic_1_word_count.csv", row.names = FALSE)
 

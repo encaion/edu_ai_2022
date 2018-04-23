@@ -114,3 +114,73 @@ wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
 #### ____ [4] 2017년 ####
 df = fread("lda_k10_topic_1_2017_1_word_count.csv", data.table = FALSE)
 wordcloud2(data = df[, -1], minSize = 10, shape = 'square')
+
+
+#### [[topics timeseries]] ####
+head(post)
+df_tm = post
+df_tm[, "date"] = strftime(paste(df_tm$year, df_tm$month, "01", sep = "-"))
+head(df_tm)
+
+#### ___ ● topic: unit test ####
+df_tm_01_agg = aggregate(data = df_tm[df_tm$topic_n == 1, ], topic_n ~ date, FUN = "sum")
+df_tm_01_agg[, "date"] = as.Date(df_tm_01_agg$date)
+head(df_tm_01_agg)
+
+ggplot() +
+  annotate(geom = "rect",
+           xmin = as.Date("2014-01-01"), xmax = as.Date("2015-01-01"),
+           ymin = 0, ymax = 125,
+           fill = "#BADAFF", alpha = 0.5) +
+  annotate(geom = "rect",
+           xmin = as.Date("2016-01-01"), xmax = as.Date("2017-01-01"),
+           ymin = 0, ymax = 125,
+           fill = "#BADAFF", alpha = 0.5) +
+  geom_line(data = df_tm_01_agg,
+            aes(x = date,
+                y = topic_n),
+            size = 1.5) + 
+  scale_x_date(breaks = as.Date(c("2014-07-01", "2015-07-01", "2016-07-01", "2017-07-01")),
+               labels = 2014:2017,
+               expand = c(0, 0)) + 
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = NULL, y = "Count", title = "Topic: 1") + 
+  theme(panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 12),
+        axis.title = element_text(size = 16),
+        plot.title = element_text(size = 20, hjust = 0.5))
+
+#### ___ ● topic: 1 ~ 10 ####
+for(topic_num in 1:10){
+  # topic_num = 2
+  df_tm_agg = aggregate(data = df_tm[df_tm$topic_n == topic_num, ], topic_n ~ date, FUN = "sum")
+  df_tm_agg[, "date"] = as.Date(df_tm_agg$date)
+  
+  gg = ggplot() +
+    annotate(geom = "rect",
+             xmin = as.Date("2014-01-01"), xmax = as.Date("2015-01-01"),
+             ymin = 0, ymax = max(df_tm_agg$topic_n),
+             fill = "#BADAFF", alpha = 0.5) +
+    annotate(geom = "rect",
+             xmin = as.Date("2016-01-01"), xmax = as.Date("2017-01-01"),
+             ymin = 0, ymax = max(df_tm_agg$topic_n),
+             fill = "#BADAFF", alpha = 0.5) +
+    geom_line(data = df_tm_agg,
+              aes(x = date,
+                  y = topic_n),
+              size = 1.5) + 
+    scale_x_date(breaks = as.Date(c("2014-07-01", "2015-07-01", "2016-07-01", "2017-07-01")),
+                 labels = 2014:2017,
+                 expand = c(0, 0)) + 
+    scale_y_continuous(expand = c(0, 0)) +
+    labs(x = NULL, y = "Count", title = paste0("Topic: ", topic_num)) + 
+    theme(panel.grid.minor = element_blank(),
+          axis.text = element_text(size = 12),
+          axis.title = element_text(size = 16),
+          plot.title = element_text(size = 20, hjust = 0.5))
+  ggsave(plot = gg, filename = paste0("topic_", 
+                                      sprintf("%02d", topic_num),
+                                      "_timeseries.png"),
+         width = 200, height = 100, units = "mm")
+}
+

@@ -2,6 +2,7 @@
 library("readxl")
 library("dplyr")
 library("data.table")
+library("reshape2")
 
 library("tm")
 library("KoNLP")
@@ -9,6 +10,8 @@ library("topicmodels")
 
 library("ggplot2")
 library("wordcloud2")
+library("qgraph")
+
 
 # workcloud2 설치는 다음 코드 실행
 # library("devtools")
