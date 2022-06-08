@@ -2,6 +2,8 @@
 
 ## [bit.ly/edu_ai_2022](https://bit.ly/edu_ai_2022)
 
+[런던 전력 데이터](https://www.kaggle.com/datasets/emmanuelfwerr/london-homes-energy-data)
+
 # 파일 다운로드 방법
 
 #### 1) 전체 파일 다운로드 
