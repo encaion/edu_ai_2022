@@ -13,7 +13,7 @@
 해당 파일을 클릭해서 들어간 후 흰색 [download ZIP] 부분을 누르면 됩니다.
 
 
-연락처: conatact@rloha.io
+연락처: contact@rloha.io
 
 ---------
 # 이용 방법
