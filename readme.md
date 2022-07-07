@@ -2,6 +2,7 @@
 
 ## [bit.ly/edu_ai_2022](https://bit.ly/edu_ai_2022)
 
+[주식](https://datadoctorblog.com/2021/10/09/etc-stock-daily-min-chart-202110-w1/)
 [런던 전력 데이터](https://www.kaggle.com/datasets/emmanuelfwerr/london-homes-energy-data)
 
 # 파일 다운로드 방법
